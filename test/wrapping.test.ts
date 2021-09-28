@@ -123,17 +123,25 @@ describe('MerkleAirdrop', function () {
       mintedTokenBalance = await mintableTokenContract.connect(user).balanceOf( userAddress  )
       mintedTokenBalance.should.equal(0)
 
+      
       let newlyMintedTokenId = await wrappedTokenContract.connect(user).legacyTokenIdRegister(tokenIdToMintAndWrap)
       console.log('newlyMintedTokenId',newlyMintedTokenId)
-
       newlyMintedTokenId.should.equal(1)
 
+
+      let tokenURI = await wrappedTokenContract.connect(user).tokenURI(newlyMintedTokenId)
+      console.log('tokenURI',tokenURI)
+
+      tokenURI.should.exist 
+
+      
       await wrappedTokenContract.connect(user).unwrap( newlyMintedTokenId  ); 
       wrappedTokenBalance = await wrappedTokenContract.connect(user).balanceOf(  userAddress  )
       wrappedTokenBalance.should.equal(0)
 
       mintedTokenBalance = await mintableTokenContract.connect(user).balanceOf( userAddress  )
       mintedTokenBalance.should.equal(1)
+
 
 
 
@@ -146,6 +154,8 @@ describe('MerkleAirdrop', function () {
 
       //unwrap again 
       await wrappedTokenContract.connect(user).unwrap( newlyMintedTokenId  ); 
+
+
 
 
     })
