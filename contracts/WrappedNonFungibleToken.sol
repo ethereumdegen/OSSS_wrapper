@@ -1942,9 +1942,12 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
     /**
     * @dev Wraps NFTs
     */
-    function wrapWithProof(uint256 legacyTokenId, bytes32[] memory merkleProof ) public returns (bool){
+    function wrapWithProof(uint256 legacyTokenId, bytes32[] memory merkleProof, bytes32 tokenIdArrayMerkleRoot ) public returns (bool){
 
-        IERC721(_wrappableContract).safeTransferFrom( _wrappableContract, address(this), legacyTokenId );
+         //require that the tokenId is in the tokenIdArray that was merkle hashed 
+        require( MerkleProof.verify(merkleProof, tokenIdArrayMerkleRoot, keccak256( abi.encode(legacyTokenId)) ) , 'proof failure');
+ 
+         IERC721(_wrappableContract).safeTransferFrom( _wrappableContract, address(this), legacyTokenId );
 
         //if this legacy token had never been wrapped, assign it to the register with a new id 
         if( legacyTokenIdRegister[legacyTokenId] == 0 ){
@@ -1953,10 +1956,8 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
             nextTokenId += 1; 
         }
         
-        //require that the tokenId is in the tokenIdArray that was merkle hashed 
-        require( MerkleProof.verify(merkleProof, _tokenIdArrayMerkleRoot, keccak256( abi.encodePacked(legacyTokenId)) ) , 'proof failure');
- 
-        _mint(msg.sender, legacyTokenIdRegister[legacyTokenId]); 
+       
+        _mint(msg.sender, legacyTokenIdRegister[legacyTokenId]);  
 
         return true;
     }
@@ -1984,7 +1985,7 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
         return IERC721Metadata(_wrappableContract).tokenURI(legacyTokenIdReverseRegister[tokenId]);
     }
 
-    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external pure returns (bytes4){
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) override external pure returns (bytes4){
         return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
     }
 

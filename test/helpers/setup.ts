@@ -4,7 +4,8 @@ import * as hre from 'hardhat'
 const { getNamedSigner, contracts, deployments, ethers } = hre
 
 interface TestSetupResult {
-  airdropToken: Contract
+  mintableToken: Contract,
+  wrappedToken: Contract,
    
   user: Signer
   deployer: Signer
@@ -30,12 +31,14 @@ export const setup = deployments.createFixture<TestSetupResult, never>(async () 
   const deployer = await getNamedSigner('deployer') 
   const user = await getNamedSigner('user') 
 
-  const airdropToken = await contracts.get('AirdropToken') 
+  const mintableToken = await contracts.get('MintableERC721') 
+  const wrappedToken = await contracts.get('WrappedNonFungibleToken') 
 
     
 
   return {
-    airdropToken,
+    mintableToken,
+    wrappedToken,
     deployer,
     user
   }
