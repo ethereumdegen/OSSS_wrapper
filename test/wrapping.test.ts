@@ -118,9 +118,35 @@ describe('MerkleAirdrop', function () {
       await wrappedTokenContract.connect(user).wrapWithProof( tokenIdToMintAndWrap , hexproof  ); 
 
       let wrappedTokenBalance = await wrappedTokenContract.connect(user).balanceOf(  userAddress  )
-
       wrappedTokenBalance.should.equal(1)
-      
+
+      mintedTokenBalance = await mintableTokenContract.connect(user).balanceOf( userAddress  )
+      mintedTokenBalance.should.equal(0)
+
+      let newlyMintedTokenId = await wrappedTokenContract.connect(user).legacyTokenIdRegister(tokenIdToMintAndWrap)
+      console.log('newlyMintedTokenId',newlyMintedTokenId)
+
+      newlyMintedTokenId.should.equal(1)
+
+      await wrappedTokenContract.connect(user).unwrap( newlyMintedTokenId  ); 
+      wrappedTokenBalance = await wrappedTokenContract.connect(user).balanceOf(  userAddress  )
+      wrappedTokenBalance.should.equal(0)
+
+      mintedTokenBalance = await mintableTokenContract.connect(user).balanceOf( userAddress  )
+      mintedTokenBalance.should.equal(1)
+
+
+
+      //wrap again 
+      await wrappedTokenContract.connect(user).wrapWithProof( tokenIdToMintAndWrap , hexproof  ); 
+
+        newlyMintedTokenId = await wrappedTokenContract.connect(user).legacyTokenIdRegister(tokenIdToMintAndWrap)
+      console.log('newlyMintedTokenId',newlyMintedTokenId)
+      newlyMintedTokenId.should.equal(1)
+
+      //unwrap again 
+      await wrappedTokenContract.connect(user).unwrap( newlyMintedTokenId  ); 
+
 
     })
   })

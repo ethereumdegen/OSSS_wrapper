@@ -1929,8 +1929,8 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
 
     address public _wrappableContract;  
    
-    mapping(uint256 => uint256) legacyTokenIdRegister; 
-    mapping(uint256 => uint256) legacyTokenIdReverseRegister; 
+    mapping(uint256 => uint256) public legacyTokenIdRegister; 
+    mapping(uint256 => uint256) public legacyTokenIdReverseRegister; 
 
     constructor(string memory name, string memory symbol, address wrappableContract, bytes32 tokenIdArrayMerkleRoot) ERC721(name, symbol) {
         _tokenIdArrayMerkleRoot = tokenIdArrayMerkleRoot;
