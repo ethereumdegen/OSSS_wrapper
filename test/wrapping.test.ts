@@ -95,7 +95,7 @@ describe('MerkleAirdrop', function () {
 
      console.log('web3',web3)
 
-     const leaf = Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', tokenIdToMintAndWrap )   )
+      const leaf = Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', tokenIdToMintAndWrap )   )
       
       const hexproof = tree.getHexProof(leaf)
 
@@ -110,8 +110,12 @@ describe('MerkleAirdrop', function () {
       let mintedTokenBalance = await mintableTokenContract.connect(user).balanceOf( userAddress  )
       mintedTokenBalance.should.equal(1)
 
+      let isApproved = await mintableTokenContract.connect(user).isApprovedForAll( userAddress, wrappedTokenContract.address  )
+      isApproved.should.equal(true)
 
-      await wrappedTokenContract.connect(user).wrapWithProof( tokenIdToMintAndWrap , hexproof, hexRoot ); 
+
+
+      await wrappedTokenContract.connect(user).wrapWithProof( tokenIdToMintAndWrap , hexproof  ); 
 
       let wrappedTokenBalance = await wrappedTokenContract.connect(user).balanceOf(  userAddress  )
 

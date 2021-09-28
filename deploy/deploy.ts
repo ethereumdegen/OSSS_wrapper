@@ -9,6 +9,10 @@ const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const keccak256 = require('keccak256');
 
+const Web3 = require('web3')
+
+let web3 = new Web3()
+
 const deployOptions: DeployFunction = async (hre) => {
   const { getNamedSigner, run, log } = hre
   const deployer = await getNamedSigner('deployer')
@@ -28,9 +32,11 @@ const deployOptions: DeployFunction = async (hre) => {
     
   }) 
 
-  let tokenIdsArray = ['2','4','7']
+  let tokenIdsArray = ['2','4','7'] 
 
-  const leaves = tokenIdsArray.map((x:any) => keccak256(x))
+  const leaves = tokenIdsArray.map((x:any) => Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', x ) ))
+      
+
   const tree = new MerkleTree(leaves, keccak256, {sortPairs: true})
    
   const hexRoot = tree.getHexRoot()

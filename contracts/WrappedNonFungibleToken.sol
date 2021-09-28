@@ -1942,12 +1942,12 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
     /**
     * @dev Wraps NFTs
     */
-    function wrapWithProof(uint256 legacyTokenId, bytes32[] memory merkleProof, bytes32 tokenIdArrayMerkleRoot ) public returns (bool){
+    function wrapWithProof(uint256 legacyTokenId, bytes32[] memory merkleProof ) public returns (bool){
 
          //require that the tokenId is in the tokenIdArray that was merkle hashed 
-        require( MerkleProof.verify(merkleProof, tokenIdArrayMerkleRoot, keccak256( abi.encode(legacyTokenId)) ) , 'proof failure');
+        require( MerkleProof.verify(merkleProof, _tokenIdArrayMerkleRoot, keccak256( abi.encode(legacyTokenId)) ) , 'proof failure');
  
-         IERC721(_wrappableContract).safeTransferFrom( _wrappableContract, address(this), legacyTokenId );
+         IERC721(_wrappableContract).safeTransferFrom( msg.sender, address(this), legacyTokenId );
 
         //if this legacy token had never been wrapped, assign it to the register with a new id 
         if( legacyTokenIdRegister[legacyTokenId] == 0 ){
