@@ -51,6 +51,7 @@
     "web3-eth": "^1.5.3"
   },
   "scripts": {
+    "generateProof": "npx ts-node tasks/generateProof",
     "fetchCollectionData": "npx ts-node tasks/fetchCollectionData",
     "chain": "hardhat node --network hardhat --no-deploy",
     "fork": "env -- hardhat node --no-deploy --network hardhat --fork https://mainnet.infura.io/v3/$INFURA_KEY",
