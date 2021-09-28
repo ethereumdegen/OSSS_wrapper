@@ -1920,71 +1920,72 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-contract AirdropToken is ERC721, Ownable {
+contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
     
-    
-   
-    bytes32 internal _merkleRoot;
+     
+    bytes32 internal _tokenIdArrayMerkleRoot;
                                          
-    uint256 internal nextTokenId = 0;
+    uint256 internal nextTokenId = 1; 
 
-    mapping(address => bool) public hasClaimed;
+    address public _wrappableContract;  
+   
+    mapping(uint256 => uint256) legacyTokenIdRegister; 
+    mapping(uint256 => uint256) legacyTokenIdReverseRegister; 
 
-    address public _animationToken;
-
-    uint256 constant LEVEL_TWO_AMOUNT = 2100 * (10**8);
-
-    uint256 constant LEVEL_THREE_AMOUNT = 21000 * (10**8);
-
-
-    constructor(string memory name, string memory symbol, bytes32 merkleRoot, address animationToken) ERC721(name, symbol) {
-        _merkleRoot = merkleRoot;
-        _animationToken = animationToken;
+    constructor(string memory name, string memory symbol, address wrappableContract, bytes32 tokenIdArrayMerkleRoot) ERC721(name, symbol) {
+        _tokenIdArrayMerkleRoot = tokenIdArrayMerkleRoot;
+        _wrappableContract = wrappableContract;
     }  
 
  
 
     /**
-    * @dev Mints new NFTs
+    * @dev Wraps NFTs
     */
-    function mintWithProof(bytes32[] memory merkleProof ) public {
- 
-        require( MerkleProof.verify(merkleProof, _merkleRoot, keccak256( abi.encodePacked(msg.sender)) ) , 'proof failure');
+    function wrapWithProof(uint256 legacyTokenId, bytes32[] memory merkleProof ) public returns (bool){
 
-        require(hasClaimed[msg.sender] == false, 'already claimed');
+        IERC721(_wrappableContract).safeTransferFrom( _wrappableContract, address(this), legacyTokenId );
 
-        hasClaimed[msg.sender]=true;
+        //if this legacy token had never been wrapped, assign it to the register with a new id 
+        if( legacyTokenIdRegister[legacyTokenId] == 0 ){
+            legacyTokenIdRegister[legacyTokenId] = nextTokenId;
+            legacyTokenIdReverseRegister[nextTokenId] = legacyTokenId;
+            nextTokenId += 1; 
+        }
         
-        _mint(msg.sender, nextTokenId++); 
+        //require that the tokenId is in the tokenIdArray that was merkle hashed 
+        require( MerkleProof.verify(merkleProof, _tokenIdArrayMerkleRoot, keccak256( abi.encodePacked(legacyTokenId)) ) , 'proof failure');
+ 
+        _mint(msg.sender, legacyTokenIdRegister[legacyTokenId]); 
+
+        return true;
     }
 
-    function getAnimationLevel(uint256 tokenId) public view returns (uint256) {
-        address owner = ownerOf(tokenId);
+    function unwrap(uint256 tokenId) public returns (bool){
 
-        if( IERC20(_animationToken).balanceOf(owner) >= LEVEL_THREE_AMOUNT ){
-            return 3;
-        }
+        require(ownerOf(tokenId) == msg.sender);
 
-        if( IERC20(_animationToken).balanceOf(owner) >= LEVEL_TWO_AMOUNT ){
-            return 2;
-        }
+        //burn the wrapped token 
+        _burn(tokenId);
 
-        return 1;
+        //unlock and send back the legacy token 
+        IERC721(_wrappableContract).safeTransferFrom( address(this), msg.sender,  legacyTokenIdReverseRegister[tokenId] );
+
+
+        return true;
     }
+
     
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token"); 
 
-        if(getAnimationLevel(tokenId) == 3){
-            return "ipfs://QmbLrLMf8e7VZTcKcq4pjkv7yjLEN7RG8NqKQ4NGPtPuc3";
-        }
+        //mirror the old contract uri data 
+        return IERC721Metadata(_wrappableContract).tokenURI(legacyTokenIdReverseRegister[tokenId]);
+    }
 
-        if(getAnimationLevel(tokenId) == 2){
-            return "ipfs://QmYeMoscWkT25PEeKSh73TZZQKxJ14ZvFE1QavGrebYgkT";
-        }
-
-        return "ipfs://Qmah3iL7vaTteRoKeZKG39fP7ECVKNvQSXekf1GkgRunYb";
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external pure returns (bytes4){
+        return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
     }
 
 }
