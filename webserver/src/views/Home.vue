@@ -70,7 +70,7 @@
 
                   <div class="flex flex-col my-2">
                     <label> Legacy Token Id </label>
-                     <input type="numeric" v-model="tokenIdToWrap" class="text-black p-2 my-2" style="width:200px"/>    
+                     <input type="text" v-model="tokenIdToWrap" class="text-black p-2 my-2" style="width:200px"/>    
                   </div>
 
                   <div v-if="!isApproved" class="mb-8 bg-green-500 select-none hover:bg-green-300  cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="approveAllToWrapper()"> Approve All </div>
@@ -99,7 +99,7 @@
                
                   <div class="flex flex-col my-2">
                     <label> Wrapped Token Id </label>
-                     <input type="numeric" v-model="tokenIdToUnwrap" class="text-black p-2 my-2" style="width:200px"/>    
+                     <input type="text" v-model="tokenIdToUnwrap" class="text-black p-2 my-2" style="width:200px"/>    
                   </div>
 
                  <div class="mb-8 bg-yellow-500 select-none hover:bg-yellow-300 cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="unwrap()"> Unwrap </div>
@@ -216,9 +216,9 @@ export default {
 
             let isApproved = await legacyNFTContract.methods.isApprovedForAll( this.activeAccountAddress, websiteConfig.wrappingContractAddress ).call()
 
-            let uri = await legacyNFTContract.methods.uri( "74465914949626719004819234140270633285428984010557290271986606391704869142529" ).call()
+           // let uri = await legacyNFTContract.methods.uri( "74465914949626719004819234140270633285428984010557290271986606391704869142529" ).call()
 
-              console.log(' uri '  , uri )
+            //  console.log(' uri '  , uri )
 
             this.isApproved = isApproved
 
@@ -228,9 +228,11 @@ export default {
 
           async approveAllToWrapper() {
 
+            let userAddress = this.web3Plug.getActiveAccountAddress()
+
             const legacyNFTContract = this.web3Plug.getCustomContract(  ERC721ABI , merkleConfig.contractData.address )
 
-            await legacyNFTContract.methods.setApprovalForAll( websiteConfig.wrappingContractAddress, true  )
+            await legacyNFTContract.methods.setApprovalForAll( websiteConfig.wrappingContractAddress, true  ).send({from:  userAddress })
 
             await this.getApproval()
           },
@@ -239,8 +241,11 @@ export default {
           wrap( ){
             
 
-              let tokenId = parseInt( this.tokenIdToWrap )     
-               
+              let tokenId =  ( this.tokenIdToWrap )   
+              
+              console.log('tokenid', tokenId)
+
+              
 
               let userAddress = this.web3Plug.getActiveAccountAddress()
 
@@ -261,10 +266,10 @@ export default {
               
               const hexproof = tree.getHexProof(leaf)
 
-              console.log(tree.verify(hexproof, leaf, hexRoot)) // true
+              console.log('verify', tree.verify(hexproof, leaf, hexRoot)) // true
             
 
-
+              console.log('proof is ', hexproof)
 
               wrappingContract.methods.wrapWithProof( tokenId, hexproof ).send({from: userAddress })
           },  
@@ -273,7 +278,7 @@ export default {
          unwrap( ){
             
 
-               let tokenId = parseInt( this.tokenIdToUnwrap )     
+               let tokenId =  ( this.tokenIdToUnwrap )     
                
 
               let userAddress = this.web3Plug.getActiveAccountAddress()

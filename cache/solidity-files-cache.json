@@ -617,8 +617,8 @@
       ]
     },
     "/home/andy/dev/OSSS_wrapper/contracts/WrappedNonFungibleToken.sol": {
-      "lastModificationDate": 1632937994694,
-      "contentHash": "cf21a3a96230a5d83c3247f76b331a1b",
+      "lastModificationDate": 1632940039399,
+      "contentHash": "edb0dcf2eb929962973343922e3b4431",
       "sourceName": "contracts/WrappedNonFungibleToken.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -657,10 +657,12 @@
       "artifacts": [
         "Address",
         "Context",
+        "ERC1155TokenReceiver",
         "ERC165",
         "ERC721",
         "EnumerableMap",
         "EnumerableSet",
+        "IERC1155",
         "IERC165",
         "IERC20",
         "IERC721",

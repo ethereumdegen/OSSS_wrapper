@@ -1,1 +1,32 @@
-{"contractData":{"address":"0x495f947276749ce646f68ac8c248420045cb7b5e","asset_contract_type":"semi-fungible","created_date":"2020-12-02T17:40:53.232025","name":"OpenSea Collection","nft_version":null,"opensea_version":"2.0.0","owner":102384,"schema_name":"ERC1155","symbol":"OPENSTORE","total_supply":null,"description":"","external_link":null,"image_url":null,"default_to_fiat":false,"dev_buyer_fee_basis_points":0,"dev_seller_fee_basis_points":0,"only_proxied_transfers":false,"opensea_buyer_fee_basis_points":0,"opensea_seller_fee_basis_points":250,"buyer_fee_basis_points":0,"seller_fee_basis_points":250,"payout_address":null},"tokenIds":["51201088056672189460196012059775003102151447965530397152643423201759844106241"],"hexRoot":"0x5d19e0d8a40af2b78a71042065480c76daa8765c08a97c76e32e27e6f8f87b16"}
+{
+    "contractData": {
+        "address": "0x495f947276749ce646f68ac8c248420045cb7b5e",
+        "asset_contract_type": "semi-fungible",
+        "created_date": "2020-12-02T17:40:53.232025",
+        "name": "OpenSea Collection",
+        "nft_version": null,
+        "opensea_version": "2.0.0",
+        "owner": 102384,
+        "schema_name": "ERC1155",
+        "symbol": "OPENSTORE",
+        "total_supply": null,
+        "description": "",
+        "external_link": null,
+        "image_url": null,
+        "default_to_fiat": false,
+        "dev_buyer_fee_basis_points": 0,
+        "dev_seller_fee_basis_points": 0,
+        "only_proxied_transfers": false,
+        "opensea_buyer_fee_basis_points": 0,
+        "opensea_seller_fee_basis_points": 250,
+        "buyer_fee_basis_points": 0,
+        "seller_fee_basis_points": 250,
+        "payout_address": null
+    },
+    "tokenIds": [
+        "51201088056672189460196012059775003102151447965530397152643423201759844106241",
+        "51201088056672189460196012059775003102151447965530397152643423205058378989569",
+        "51201088056672189460196012059775003102151447965530397152643423206157890617345"
+    ],
+    "hexRoot": "0x8dd27f306d6d2bcfd2e59a333f8d22c697c1985353ea10119f398f1628aba5dd"
+}
