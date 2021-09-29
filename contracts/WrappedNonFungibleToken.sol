@@ -2150,8 +2150,31 @@ contract WrappedNonFungibleToken is ERC721, Ownable, ERC1155TokenReceiver {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token"); 
 
         //mirror the old contract uri data 
-        return string(abi.encodePacked( baseURI() , legacyTokenIdReverseRegister[tokenId] ));   
+        return string(abi.encodePacked( baseURI() , uint2str(legacyTokenIdReverseRegister[tokenId]) ));   
     }
+
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len;
+        while (_i != 0) {
+            k = k-1;
+            uint8 temp = (48 + uint8(_i - _i / 10 * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+
 
  
     function onERC1155Received(address _operator, address _from, uint256 _id, uint256 _value, bytes calldata _data) external override returns(bytes4){
