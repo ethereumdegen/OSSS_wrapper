@@ -9,7 +9,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -59,7 +59,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -108,7 +108,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -150,7 +150,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -194,7 +194,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -236,7 +236,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -280,7 +280,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -322,7 +322,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -364,7 +364,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -406,7 +406,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -450,7 +450,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -492,7 +492,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -536,7 +536,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -580,7 +580,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -617,14 +617,14 @@
       ]
     },
     "/home/andy/dev/OSSS_wrapper/contracts/WrappedNonFungibleToken.sol": {
-      "lastModificationDate": 1632863420240,
-      "contentHash": "056e53fb9e2367f79383a1cd2e083909",
+      "lastModificationDate": 1632937994694,
+      "contentHash": "cf21a3a96230a5d83c3247f76b331a1b",
       "sourceName": "contracts/WrappedNonFungibleToken.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {
@@ -682,7 +682,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": false,
+            "enabled": true,
             "runs": 200
           },
           "outputSelection": {

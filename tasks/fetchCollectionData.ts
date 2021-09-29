@@ -52,12 +52,18 @@ for(let offset=0; offset<totalSupply; offset+=50){
 }
 
 
-tokenIds =["5","6","7","8"]
+//tokenIds =["51201088056672189460196012059775003102151447965530397152643423201759844106241"]
 
  // artblox (rinkeby)
 
 // 0x388f486dbcbe05029ba7adf784459b580b427032
 // 0x1ae795286c5dd0cad1dd38aef9a3015558e9d303ec7474e5e59abc16a43abbd6
+
+
+//duckies  (rinkeby) 
+//0x88b48f654c30e99bc2e4a1559b4dcf1ad93fa656
+//0x5d19e0d8a40af2b78a71042065480c76daa8765c08a97c76e32e27e6f8f87b16
+
 
 
 //duckies  (mainnet) 

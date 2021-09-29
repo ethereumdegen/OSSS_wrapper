@@ -588,6 +588,11 @@ interface IERC721Metadata is IERC721 {
      * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
+
+    /**
+     * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
+     */
+    function uri(uint256 tokenId) external view returns (string memory);
 }
 
 /**
@@ -703,6 +708,11 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
      */
     function symbol() public view virtual override returns (string memory) {
         return _symbol;
+    }
+
+
+    function uri(uint256 tokenId) public view virtual override returns (string memory) {
+        return tokenURI(tokenId);
     }
 
     /**
@@ -1928,6 +1938,8 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
     uint256 internal nextTokenId = 1; 
 
     address public _wrappableContract;  
+
+    string internal _baseURI;
    
     mapping(uint256 => uint256) public legacyTokenIdRegister; 
     mapping(uint256 => uint256) public legacyTokenIdReverseRegister; 
@@ -1976,13 +1988,23 @@ contract WrappedNonFungibleToken is ERC721, Ownable, IERC721Receiver {
         return true;
     }
 
-    
+     /**
+     * @notice Sets the Option contract metadata URI.
+     * example:  _baseURI ="https://api.niftyoptions.org/metadata/"
+     *
+     * Requirements:
+     *  - {_msgSender} must be the owner
+     */
+    function setBaseURI(string calldata _uri) external onlyOwner {
+        _baseURI = _uri;
+    }
+      
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token"); 
 
         //mirror the old contract uri data 
-        return IERC721Metadata(_wrappableContract).tokenURI(legacyTokenIdReverseRegister[tokenId]);
+        return string(abi.encodePacked( _baseURI , legacyTokenIdReverseRegister[tokenId] ));   
     }
 
     function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) override external pure returns (bytes4){

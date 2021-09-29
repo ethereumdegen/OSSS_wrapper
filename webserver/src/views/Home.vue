@@ -194,6 +194,7 @@ export default {
 
       this.web3Plug.reconnectWeb()
    
+ 
        
 
   },
@@ -215,6 +216,9 @@ export default {
 
             let isApproved = await legacyNFTContract.methods.isApprovedForAll( this.activeAccountAddress, websiteConfig.wrappingContractAddress ).call()
 
+            let uri = await legacyNFTContract.methods.uri( "74465914949626719004819234140270633285428984010557290271986606391704869142529" ).call()
+
+              console.log(' uri '  , uri )
 
             this.isApproved = isApproved
 
