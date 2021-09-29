@@ -14,24 +14,30 @@
 
    </div>
 
-  
-
-   <div class="section  border-b-2 border-black" style="background:#1d1d1d;">
-     <div class=" ">
-       <div class=" ">
-
-       </div>
-       <div class="    w-full text-center ">
+   
 
 
-     
-           <img src="@/assets/images/BananaSmasher.jpg" class=" py-8" style="margin:0 auto; width:100%; max-width:1000px;  " />
-     
+    <div class="section  text-white  border-b-2 border-black " v-if="!signedInToWeb3" style="background:#222;">
+     <div class="w-container  ">
 
- 
+         
+
+          <div class=" w-2/3  mt-8 py-32" style="margin: 0 auto;">
+           
+                <div> Sign in to web3 to wrap your NFTs. </div>
+
+                 
+                <div>
+                  <div v-if="web3Plug.connectedToWeb3() == false" @click="connectToWeb3" class="button inline-block bg-blue-500 hover:bg-blue-700 text-sm text-black font-bold my-2 py-1 px-2 rounded cursor-pointer">Login with Web3</div>
+                </div>
+
+                
+         </div>
+
         
-          
-       </div>
+         
+
+
      </div>
    </div>
 
@@ -43,14 +49,16 @@
 
           <div class=" w-2/3  mt-8 py-8" style="margin: 0 auto;">
            
-                <div class="text-2xl text-center"> You will earn up to: {{  parseFloat( balances['WETH'] ) }} WETH </div>
+                <div class="text-2xl text-center"> Wrap your {{  websiteConfig.nftName  }} </div>
 
-                  <div class="flex flex-col my-8">
-                    <label> Banana Token Id </label>
-                     <input type="numeric" v-model="tokenId" class="text-black p-2 my-2" style="width:200px"/>    
+                  <div class="flex flex-col my-2">
+                    <label> Legacy Token Id </label>
+                     <input type="numeric" v-model="tokenIdToWrap" class="text-black p-2 my-2" style="width:200px"/>    
                   </div>
 
-                 <div class="mt-8 bg-red-600 select-none hover:bg-red-500 cursor-pointer rounded p-4 text-white border-2 border-black inline-block" @click="smash()"> Smash my Banana! </div>
+                  <div v-if="!isApproved" class="mb-8 bg-green-500 select-none hover:bg-green-300  cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="approveAllToWrapper()"> Approve All </div>
+
+                 <div v-if="isApproved" class="mb-8 bg-yellow-500 select-none hover:bg-yellow-300  cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="wrap()"> Wrap </div>
          </div>
 
         
@@ -69,16 +77,15 @@
 
           <div class=" w-2/3  mt-8 py-8" style="margin: 0 auto;">
            
-                <div class="text-2xl text-center"> Donate to teh Banana Smashers!! </div>
+                <div class="text-2xl text-center"> Unwrap your {{  websiteConfig.nftName  }} </div>
 
-                <p class="text-sm text-center ">  (This will increase the amount of WETH that the next banana smasher will get -- duh!) </p> 
-
-                  <div class="flex flex-col my-8">
-                    <label> WETH donation amount </label>
-                     <input type="numeric" v-model="donationAmount" class="text-black p-2 my-2" style="width:200px"/>    
+               
+                  <div class="flex flex-col my-2">
+                    <label> Wrapped Token Id </label>
+                     <input type="numeric" v-model="tokenIdToUnwrap" class="text-black p-2 my-2" style="width:200px"/>    
                   </div>
 
-                 <div class="mt-8 bg-yellow-500 select-none hover:bg-yellow-300 cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="donate()"> Donate WETH! </div>
+                 <div class="mb-8 bg-yellow-500 select-none hover:bg-yellow-300 cursor-pointer rounded p-4 text-black border-2 border-black inline-block" @click="unwrap()"> Unwrap </div>
          </div>
 
         
@@ -111,7 +118,21 @@ import TabsBar from './components/TabsBar.vue';
    
 import FrontendHelper from '../js/frontend-helper.js';
 
+import Web3 from 'web3'
+
+
 const ERC721ABI = require('../contracts/ERC721ABI.json')
+
+const WrappedNFTABI = require('../contracts/WrappedNonFungibleTokenABI.json')
+
+const websiteConfig = require('../config/websiteConfig')
+const merkleConfig = require('../config/merkleConfig')
+
+const { MerkleTree } = require('merkletreejs')
+const SHA256 = require('crypto-js/sha256')
+const keccak256 = require('keccak256');
+
+
 
 
 export default {
@@ -122,9 +143,14 @@ export default {
     return {
       web3Plug: new Web3Plug() , 
       signedInToWeb3: false,
-      balances: {} ,
-      tokenId: 0,
-      donationAmount: 0 
+      websiteConfig: websiteConfig,
+      merkleConfig:merkleConfig,
+       
+      isApproved: false,
+
+
+      tokenIdToWrap: 0,
+      tokenIdToUnwrap: 0 
       
     }
   },
@@ -154,68 +180,86 @@ export default {
 
   },
   mounted: function () {
-    this.getBalances()
+    this.getApproval()
     
-    setInterval(  this.getBalances.bind(this), 5000  )
+    setInterval(  this.getApproval.bind(this), 5000  )
   }, 
   methods: {
 
-          async getBalances(){
+          connectToWeb3(){
+            this.web3Plug.connectWeb3( )
+          },
 
-            const smasherAddress = '0xbf3122b2aa3102693e3194df7870e1a7ae146b50'
-            
-            const currencyAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' //WETH9  
+          async getApproval(){
 
-            const currencyContract = this.web3Plug.getTokenContract( currencyAddress )
+            const legacyNFTContract = this.web3Plug.getCustomContract(  ERC721ABI , merkleConfig.contractData.address )
 
-            let wethBalanceRaw = await currencyContract.methods.balanceOf( smasherAddress ).call()
 
-            this.balances['WETH'] = this.web3Plug.rawAmountToFormatted(wethBalanceRaw, 18)
+            let isApproved = await legacyNFTContract.methods.isApprovedForAll( this.activeAccountAddress, websiteConfig.wrappingContractAddress ).call()
 
-            console.log(' this.balances',  this.balances)
 
-            this.$forceUpdate()
+            this.isApproved = isApproved
 
+            console.log(' is approved' , this.isApproved)
           },
 
 
-          smash( ){
+          async approveAllToWrapper() {
+
+            const legacyNFTContract = this.web3Plug.getCustomContract(  ERC721ABI , merkleConfig.contractData.address )
+
+            await legacyNFTContract.methods.setApprovalForAll( websiteConfig.wrappingContractAddress, true  )
+
+            await this.getApproval()
+          },
+        
+
+          wrap( ){
             
 
-              let tokenId = parseInt( this.tokenId )    
-
-                console.log('smash! ',tokenId)
+              let tokenId = parseInt( this.tokenIdToWrap )     
+               
 
               let userAddress = this.web3Plug.getActiveAccountAddress()
 
-              const bananaContract = this.web3Plug.getCustomContract(  ERC721ABI , '0xb9ab19454ccb145f9643214616c5571b8a4ef4f2' )
+              const wrappingContract = this.web3Plug.getCustomContract(  WrappedNFTABI , websiteConfig.wrappingContractAddress )
 
-              const currencyAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' //WETH9  
+             // let merkleProof = 
 
-              const smasherAddress = '0xbf3122b2aa3102693e3194df7870e1a7ae146b50'
 
-              bananaContract.methods.safeTransferFrom( userAddress, smasherAddress, tokenId , currencyAddress ).send({from: userAddress })
+              const leaves = merkleConfig.tokenIds.map((x) => Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', x ) ))
+              const tree = new MerkleTree(leaves, keccak256, {sortPairs: true})
+              
+              const hexRoot = tree.getHexRoot()
+              
+              console.log('hex root is ', hexRoot)
+  
+
+              const leaf = Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', tokenId )   )
+              
+              const hexproof = tree.getHexProof(leaf)
+
+              console.log(tree.verify(hexproof, leaf, hexRoot)) // true
+            
+
+
+
+              wrappingContract.methods.wrapWithProof( tokenId, hexproof ).send({from: userAddress })
           },  
         
 
-         donate( ){
+         unwrap( ){
             
 
-              let donationAmount = this.web3Plug.formattedAmountToRaw( this.donationAmount, 18 )    
-
-              
+               let tokenId = parseInt( this.tokenIdToUnwrap )     
+               
 
               let userAddress = this.web3Plug.getActiveAccountAddress()
 
-            
-              const currencyAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' //WETH9  
+              const wrappingContract = this.web3Plug.getCustomContract(  WrappedNFTABI , websiteConfig.wrappingContractAddress )
 
-              const smasherAddress = '0xbf3122b2aa3102693e3194df7870e1a7ae146b50'
-
-              const wethContract = this.web3Plug.getTokenContract(   currencyAddress  )
-
-
-              wethContract.methods.transfer( smasherAddress, donationAmount ).send({from: userAddress })
+              
+              wrappingContract.methods.unwrap(tokenId).send({from: userAddress })
           },  
  
 

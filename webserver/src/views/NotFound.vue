@@ -44,10 +44,7 @@ import Web3Plug from '../js/web3-plug.js'
 import Navbar from './components/Navbar.vue';
  
 import Footer from './components/Footer.vue';
-
-import BidPacketHelper from '../js/bidpacket-helper.js'
-
-
+ 
 
 
 

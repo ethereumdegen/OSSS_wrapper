@@ -7,11 +7,11 @@
         <div class="w-1/2 lg:w-1/4 flex flex-col">
           <h3 class=" text-lg font-bold ">Documentation</h3>
 
-          <a href="https://etherscan.io/address/0xbf3122b2aa3102693e3194df7870e1a7ae146b50" target="_blank" class="no-underline inline-block text-sm text-gray-200 hover:text-purple-300 ">Smasher Contract</a>
+          <a v-bind:href="'https://etherscan.io/address/'+wrappingContractAddress" target="_blank" class="no-underline inline-block text-sm text-gray-200 hover:text-purple-300 ">Wrapper Contract</a>
               
               
           </div>
-        <div class="w-1/2 lg:w-1/4 flex flex-col">
+        <div class="w-1/2 lg:w-1/4 flex flex-col hidden">
           <h3 class=" text-lg font-bold ">Community &amp; Social</h3>
           
          
@@ -26,12 +26,17 @@
 
 <script>
 
+let merkleConfig = require('../../config/merkleConfig.json')
+
+let websiteConfig = require('../../config/websiteConfig.json')
 
 export default {
   name: 'Footer',
   props: [],
   data() {
-    return {
+    return { 
+ 
+      wrappingContractAddress: websiteConfig.wrappingContractAddress
 
     }
   },

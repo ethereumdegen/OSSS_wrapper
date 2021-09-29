@@ -16,8 +16,7 @@ const Web3 = require('web3');
 const web3utils = Web3.utils;
  
 import BigNumber from 'bignumber.js'
-
-const contractData = require('../config/contractdata.json')
+ 
 const tokenContractABI = require('../contracts/ERC20ABI')
 const nftContractABI = require('../contracts/ERC721ABI')
  
@@ -31,6 +30,7 @@ var web3Instance = null
  
   let networkIds = {
     'mainnet':1,
+    'rinkeby':4,
     'goerli':5,
     'kovan':42,
     'matic':137,
