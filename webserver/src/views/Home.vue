@@ -130,8 +130,7 @@ const WrappedNFTABI = require('../contracts/WrappedNonFungibleTokenABI.json')
 const websiteConfig = require('../config/websiteConfig')
 const merkleConfig = require('../config/merkleConfig')
 
-const { MerkleTree } = require('merkletreejs')
-const SHA256 = require('crypto-js/sha256')
+const { MerkleTree } = require('merkletreejs') 
 const keccak256 = require('keccak256');
 
 

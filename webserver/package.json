@@ -29,6 +29,8 @@
     "socket.io": "^3.1.1",
     "socket.io-client": "^3.1.1",
     "tailwindcss": "^1.0.0-beta.4",
+    "keccak256": "^1.0.3",
+    "merkletreejs": "^0.2.24",
     "tinyfox": "^0.13.3",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",

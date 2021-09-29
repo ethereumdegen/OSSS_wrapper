@@ -6,7 +6,7 @@ const { use, should, expect } = require('chai')
 const { solidity } = require('ethereum-waffle')
 
 const { MerkleTree } = require('merkletreejs')
-const SHA256 = require('crypto-js/sha256')
+ 
 const keccak256 = require('keccak256');
 
 const Web3 = require('web3')
