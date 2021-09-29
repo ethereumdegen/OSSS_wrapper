@@ -2085,7 +2085,7 @@ contract WrappedNonFungibleToken is ERC721, Ownable, ERC1155TokenReceiver {
 
     address public _wrappableContract;  
 
-    string internal _baseURI;
+    
    
     mapping(uint256 => uint256) public legacyTokenIdRegister; 
     mapping(uint256 => uint256) public legacyTokenIdReverseRegister; 
@@ -2142,7 +2142,7 @@ contract WrappedNonFungibleToken is ERC721, Ownable, ERC1155TokenReceiver {
      *  - {_msgSender} must be the owner
      */
     function setBaseURI(string calldata _uri) external onlyOwner {
-        _baseURI = _uri;
+        _setBaseURI(_uri) ;
     }
       
 
@@ -2150,7 +2150,7 @@ contract WrappedNonFungibleToken is ERC721, Ownable, ERC1155TokenReceiver {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token"); 
 
         //mirror the old contract uri data 
-        return string(abi.encodePacked( _baseURI , legacyTokenIdReverseRegister[tokenId] ));   
+        return string(abi.encodePacked( baseURI() , legacyTokenIdReverseRegister[tokenId] ));   
     }
 
  

@@ -617,8 +617,8 @@
       ]
     },
     "/home/andy/dev/OSSS_wrapper/contracts/WrappedNonFungibleToken.sol": {
-      "lastModificationDate": 1632940039399,
-      "contentHash": "edb0dcf2eb929962973343922e3b4431",
+      "lastModificationDate": 1632940666107,
+      "contentHash": "a4a89637f35954de463225f3a6bcb40d",
       "sourceName": "contracts/WrappedNonFungibleToken.sol",
       "solcConfig": {
         "version": "0.8.4",
