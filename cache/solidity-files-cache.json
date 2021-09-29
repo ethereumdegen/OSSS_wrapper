@@ -9,7 +9,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -59,7 +59,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -108,7 +108,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -150,7 +150,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -194,7 +194,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -236,7 +236,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -280,7 +280,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -322,7 +322,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -364,7 +364,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -406,7 +406,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -450,7 +450,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -492,7 +492,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -536,7 +536,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -580,7 +580,7 @@
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -617,14 +617,14 @@
       ]
     },
     "/home/andy/dev/OSSS_wrapper/contracts/WrappedNonFungibleToken.sol": {
-      "lastModificationDate": 1632940666107,
-      "contentHash": "a4a89637f35954de463225f3a6bcb40d",
+      "lastModificationDate": 1632941293511,
+      "contentHash": "f9041fd0bae91fba8e89808369927dbf",
       "sourceName": "contracts/WrappedNonFungibleToken.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -677,14 +677,14 @@
       ]
     },
     "/home/andy/dev/OSSS_wrapper/contracts/MintableERC721.sol": {
-      "lastModificationDate": 1632861238810,
-      "contentHash": "2532d7e00a56ad4a9aca37b11891b25d",
+      "lastModificationDate": 1632943073456,
+      "contentHash": "5bf4ad23851f285f96b1786d983ae4fb",
       "sourceName": "contracts/MintableERC721.sol",
       "solcConfig": {
         "version": "0.8.4",
         "settings": {
           "optimizer": {
-            "enabled": true,
+            "enabled": false,
             "runs": 200
           },
           "outputSelection": {
@@ -712,6 +712,50 @@
       },
       "imports": [
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+        "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MintableERC721"
+      ]
+    },
+    "/home/andy/dev/OSSS_wrapper/contracts/MintableERC1155.sol": {
+      "lastModificationDate": 1632943067872,
+      "contentHash": "b493829819f55d5f9df21d9ba961ceeb",
+      "sourceName": "contracts/MintableERC1155.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
         "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
         "@openzeppelin/contracts-upgradeable/utils/StringsUpgradeable.sol"
       ],
@@ -719,8 +763,7 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "MintableERC1155",
-        "MintableERC721"
+        "MintableERC1155"
       ]
     }
   }

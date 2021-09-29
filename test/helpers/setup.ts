@@ -31,7 +31,7 @@ export const setup = deployments.createFixture<TestSetupResult, never>(async () 
   const deployer = await getNamedSigner('deployer') 
   const user = await getNamedSigner('user') 
 
-  const mintableToken = await contracts.get('MintableERC721') 
+  const mintableToken = await contracts.get('MintableERC1155') 
   const wrappedToken = await contracts.get('WrappedNonFungibleToken') 
 
     
