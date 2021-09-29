@@ -119,6 +119,8 @@ describe('MerkleAirdrop', function () {
 
 
 
+      await wrappedTokenContract.connect(deployer).setBaseURI( "https://testnets.myapi.com/token/"  ); 
+
       await wrappedTokenContract.connect(user).wrapWithProof( tokenIdToMintAndWrap , hexproof  ); 
 
       let wrappedTokenBalance = await wrappedTokenContract.connect(user).balanceOf(  userAddress  )
