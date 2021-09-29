@@ -589,10 +589,7 @@ interface IERC721Metadata is IERC721 {
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
 
-    /**
-     * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
-     */
-    function uri(uint256 tokenId) external view returns (string memory);
+    
 }
 
 /**
@@ -710,10 +707,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
         return _symbol;
     }
 
-
-    function uri(uint256 tokenId) public view virtual override returns (string memory) {
-        return tokenURI(tokenId);
-    }
+ 
 
     /**
      * @dev See {IERC721Metadata-tokenURI}.
