@@ -1,6 +1,6 @@
 {
-  "name": "miners-guild-web",
-  "description": "Neutral DAO",
+  "name": "OSSS NFT Wrapper",
+  "description": "An Ethereum dapp for wrapping NFTs using Merkle Proofs",
   "version": "0.1.0",
   "type": "module",
   "postcss": {
