@@ -1,0 +1,18 @@
+{   "contractName":"DigitalNFT",
+    "version":"1",
+    "primaryType":"MintPacket",
+    "entries":{
+         
+        "artist":"address",
+        "keypassToken":"address",
+        "uri":"string",
+        "maxCopies":"uint256",
+        "expirationBlock":"uint256",
+        
+
+        "currencyToken":"address",
+        "currencyAmount":"uint256"
+        
+     }
+}
+ 

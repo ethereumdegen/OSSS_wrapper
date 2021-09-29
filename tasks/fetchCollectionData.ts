@@ -51,10 +51,19 @@ for(let offset=0; offset<totalSupply; offset+=50){
 
 }
 
- // artblox 
+
+tokenIds =["5","6","7","8"]
+
+ // artblox (rinkeby)
 
 // 0x388f486dbcbe05029ba7adf784459b580b427032
 // 0x1ae795286c5dd0cad1dd38aef9a3015558e9d303ec7474e5e59abc16a43abbd6
+
+
+//duckies  (mainnet) 
+//0x495f947276749ce646f68ac8c248420045cb7b5e
+//0x1f3ad541610ae5e7768e8f37148ec6e78a50ce87b49dd2fb6bf914d1e3680365
+
 
 const leaves = tokenIds.map((x:any) => Web3.utils.keccak256( web3.eth.abi.encodeParameter('uint256', x ) ))
 const tree = new MerkleTree(leaves, keccak256, {sortPairs: true})

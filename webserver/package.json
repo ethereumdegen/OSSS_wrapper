@@ -1,0 +1,58 @@
+{
+  "name": "miners-guild-web",
+  "description": "Neutral DAO",
+  "version": "0.1.0",
+  "type": "module",
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  },
+  "scripts": {
+    "regenerate": "node tasks/generateContractLookup.js",
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "deploy": "node deploy.js",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "axios": "^0.21.1",
+    "core-js": "^2.6.5",
+    "cors": "^2.8.5",
+    "ethereumjs-abi": "^0.6.8",
+    "ethereumjs-util": "^7.0.9",
+    "gh-pages": "^3.1.0",
+    "mongodb": "^3.6.5",
+    "socket.io": "^3.1.1",
+    "socket.io-client": "^3.1.1",
+    "tailwindcss": "^1.0.0-beta.4",
+    "tinyfox": "^0.13.3",
+    "vue": "^2.6.6",
+    "vue-router": "^3.0.1",
+    "vue-tailwind": "^1.2.6",
+    "web3": "^1.2.11"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.7.4",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-plugin-unit-mocha": "^4.5.6",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/test-utils": "^1.0.3",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "express": "^4.17.1",
+    "highlight.js": "^10.2.0",
+    "json-beautify": "^1.1.1",
+    "mocha": "^8.2.1",
+    "vue-template-compiler": "^2.5.21"
+  }
+}
