@@ -7,7 +7,7 @@
         <div class="w-1/2 lg:w-1/4 flex flex-col">
           <h3 class=" text-lg font-bold ">Documentation</h3>
 
-          <a v-bind:href="'https://etherscan.io/address/'+wrappingContractAddress" target="_blank" class="no-underline inline-block text-sm text-gray-200 hover:text-purple-300 ">Wrapper Contract</a>
+          <a v-bind:href=" getExplorerLinkForAddress(wrappingContractAddress)" target="_blank" class="no-underline inline-block text-sm text-gray-200 hover:text-purple-300 ">Wrapper Contract</a>
               
               
           </div>
@@ -32,7 +32,7 @@ let websiteConfig = require('../../config/websiteConfig.json')
 
 export default {
   name: 'Footer',
-  props: [],
+  props: ['web3Plug'],
   data() {
     return { 
  
@@ -44,6 +44,11 @@ export default {
 
   },
   methods: {
+
+    getExplorerLinkForAddress(addr){
+
+      return this.web3Plug.getExplorerLinkForAddress(addr)
+    }
 
   }
 }

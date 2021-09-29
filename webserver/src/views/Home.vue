@@ -98,7 +98,9 @@
 
 
     
-  <Footer/>
+  <Footer
+    v-bind:web3Plug="web3Plug"
+  />
 
 </div>
 </template>

@@ -199,6 +199,10 @@ export default class Web3Plug {
 
 
   getChainExplorerURL(networkId){ 
+    if(networkId == 4){
+      return 'https://rinkeby.etherscan.io'
+    }
+
     if(networkId == 5){
       return 'https://goerli.etherscan.io'
     }
