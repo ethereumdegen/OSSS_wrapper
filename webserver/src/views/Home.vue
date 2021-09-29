@@ -15,6 +15,23 @@
    </div>
 
    
+ <div class="section  text-white  border-b-2 border-black hidden" style="background:#222;">
+     <div class="w-container  ">
+
+         
+
+          <div class=" w-2/3   py-2" style="margin: 0 auto;">
+           
+               <img  src="@/assets/images/banner.jpg" />
+                
+         </div>
+
+        
+         
+
+
+     </div>
+   </div>
 
 
     <div class="section  text-white  border-b-2 border-black " v-if="!signedInToWeb3" style="background:#222;">
